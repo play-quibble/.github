@@ -168,6 +168,22 @@ Start with v1; upgrade to v2 when needed.
 
 ---
 
+## UX Improvements
+
+- [ ] **Inline question creation in QuizBuilder** — allow hosts to add questions directly while building a quiz, without first navigating to a bank. The bank system stays for power users who want reusable libraries, but shouldn't be the only path for new users. Core to the "fastest way to go from idea to live quiz" positioning.
+- [ ] **Replace `confirm()` dialogs with inline confirmations** — the native browser dialog looks out of place against the polished UI. Affects quiz delete (`QuizzesView`) and round delete (`QuizBuilder`).
+
+---
+
+## Monetization
+
+- [ ] **Wire up personal Stripe billing** — `EntitlementChecker` interface and `subscriptions` table are already in place. Implement Stripe webhook handler to populate the table and swap the no-op billing stub for a real implementation. (Org billing is tracked separately above.)
+- [ ] **Define free vs. paid tier limits** — suggested starting point: free tier gets 1 active game/month or a cap on saved quizzes; paid removes limits. Break-even at $0.99/mo is ~40 subscribers given current DOKS + load balancer costs.
+- [ ] **Custom branding (paid tier)** — org-level and personal theming (logo, colors) for companies, pub trivia brands, and classrooms. Priority: before AV support. Natural fit alongside the Organizations feature.
+- [ ] **Reliability as a paid differentiator** — consider surfacing session performance as a paid-tier selling point (e.g. no throttling on free tier, priority WebSocket handling). Hosts in front of a crowd will pay to avoid a broken trivia night.
+
+---
+
 ## Known Gaps (Non-Billing)
 
 ### Critical
@@ -188,3 +204,11 @@ Start with v1; upgrade to v2 when needed.
 ### Low
 - **Accessibility** — `aria-label` attributes exist on buttons, but no ARIA live regions for real-time game updates (important for screen readers) and no keyboard navigation testing.
 - **i18n** — All text is hardcoded English; no translation library or locale detection.
+- **AV question support** — images, audio clips, and video embedded in question prompts. Nice differentiator but secondary to creation speed.
+
+---
+
+## Infrastructure Backlog
+
+- [ ] Argo CD GitOps + Kustomize overlays (`base/`, `overlays/dev/`, `overlays/prod/`)
+- [ ] GKE migration path (`overlays/gke/`) — swap DOKS → GKE Autopilot, Redis → Memorystore
