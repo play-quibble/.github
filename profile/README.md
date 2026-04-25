@@ -95,7 +95,7 @@ Gated handlers call this. Later, swap in a Stripe-webhook-backed implementation 
 The chart bundles all workloads and is published automatically to GitHub Pages via `chart-releaser` on every push to `main` that touches `charts/**`. Install with:
 
 ```
-helm repo add quibble https://benbotsford.github.io/trivia
+helm repo add quibble https://play-quibble.github.io/charts
 helm install quibble quibble/quibble -f my-values.yaml
 ```
 
